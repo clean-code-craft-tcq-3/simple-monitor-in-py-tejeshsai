@@ -1,8 +1,4 @@
 import re
-# import googletrans
-from googletrans import Translator
-translator = Translator()
-
 
 def battery_is_ok(temperature, soc, charge_rate):
     return (temperature_is_ok(temperature) and soc_is_ok(soc) and charge_rate_is_ok(charge_rate))
@@ -20,17 +16,6 @@ def soc_is_ok(soc):
 def charge_rate_is_ok(charge_rate):
     return is_feature_in_limit(0, 0.8, charge_rate, 'Charge_Rate')
 
-
-def translate_warning(text, language):
-    translated_text = translator.translate(text,  src='en', dest=language)
-    return(translated_text)
-
-
-def print_text(text):
-    print(text)
-    print(translate_warning(text, 'de').text)
-
-
 def get_value_from_feature(feature_value):
     return int(re.sub('[A-Za-z]',"", feature_value))
 
@@ -41,19 +26,22 @@ def get_unit_from_feature(feature_value):
 
 def check_lower_limit(lower_limit, upper_limit, feature_value):
     if((feature_value <= (lower_limit+(upper_limit*5)/100) and feature_value >= lower_limit)):
-        print_text('Warning: Approaching discharge')
+        print('Warning: Approaching discharge')
+        print("Warnung: Naht Entladung")
 
 
 def check_upper_limit(upper_limit, feature_value):
     if((feature_value >= (upper_limit-(upper_limit*5)/100) and feature_value <= upper_limit)):
-        print_text('Warning: Approaching charge-peak')
+        print('Warning: Approaching charge-peak')
+        print("Warnung: Ladespitze nähert sich")
 
 
 def is_feature_in_limit(lower_limit, upper_limit, feature_value, feature):
     check_lower_limit(lower_limit, upper_limit, feature_value)
     check_upper_limit(upper_limit, feature_value)
     if(feature_value < lower_limit or feature_value > upper_limit):
-        print_text(feature+ ": "+ str(feature_value)+ " is out of range")
+        print(feature+ ": "+ str(feature_value)+ " is out of range")
+        print(feature+ ": "+ str(feature_value)+ " ist außerhalb des Bereichs")
         return False
     else:
         return True
