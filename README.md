@@ -55,4 +55,4 @@ Shorten the Semantic distance
 - Procedural to express sequence
 - Functional to express relation between input and output
 - Object oriented to encapsulate state with actions
-- Apect oriented to capture repeating aspects
+- Apect oriented to capture repeating aspect
